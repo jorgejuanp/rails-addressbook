@@ -1,6 +1,6 @@
 class ContactsController < ApplicationController
   def index
-    @contacts = Contact.all
+    @contacts = Contact.all.order(name: :asc)
   end
 
   def new
@@ -18,5 +18,11 @@ class ContactsController < ApplicationController
     contact.save
 
     redirect_to("/contacts")
+  end
+
+  def details
+    @contact = Contact.find params[:id]
+  rescue ActiveRecord::RecordNotFound
+    render 'no_contact_found'
   end
 end
